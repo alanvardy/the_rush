@@ -1,13 +1,13 @@
 defmodule TheRush.PlayerStatistics do
   @moduledoc "Handles getting and sorting NFL player statistical data"
 
-  alias TheRush.PlayerStatistics.Sort
+  alias TheRush.PlayerStatistics.{Search, Sort}
 
-  @type player_data :: [map]
   @data "json/rushing.json"
         |> File.read!()
         |> Jason.decode!()
-        |> Enum.sort(&(&1["Player"] <= &2["Player"]))
+        |> Search.build_search_fields()
+        |> Sort.presort()
 
   @fields [
     {"Player", "Name"},
@@ -32,18 +32,13 @@ defmodule TheRush.PlayerStatistics do
     @fields
   end
 
-  @spec get_data :: player_data
-  @spec get_data(keyword) :: player_data
-  def get_data(opts \\ []) do
-    @data
-    |> build_map(opts)
+  @spec get_data(%{search: String.t(), sort: {String.t(), :asc | :desc}}) :: [map]
+  def get_data(%{search: search, sort: sort}) do
+    %{data: @data, search: search, sort: sort}
+    |> Search.run()
     |> Sort.run()
+    |> Map.get(:data)
   end
 
-  defp build_map(data, opts) do
-    %{
-      data: data,
-      sort: Keyword.get(opts, :sort)
-    }
-  end
+  defdelegate sanitize_search(string), to: Search, as: :sanitize
 end
