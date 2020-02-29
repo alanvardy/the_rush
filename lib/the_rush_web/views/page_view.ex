@@ -1,7 +1,7 @@
 defmodule TheRushWeb.PageView do
   use TheRushWeb, :view
 
-  alias ExEffectiveBootstrap.Icons
+  alias ExEffectiveBootstrap.{Icons, Inputs}
 
   @doc "Make a sort button and show a chevron if column is sorted, takes the current column and the sort variable"
   @spec build_sort(any, any) :: {:safe, iolist}
@@ -22,6 +22,7 @@ defmodule TheRushWeb.PageView do
   def cell_class(column, {column, _}), do: "table-active"
   def cell_class(_, _), do: ""
 
+  @spec search_box :: {:safe, iolist}
   def search_box do
     form_for(
       :search,
@@ -34,10 +35,11 @@ defmodule TheRushWeb.PageView do
       ],
       fn f ->
         [
-          text_input(f, :search,
+          Inputs.input(f, :search,
             placeholder: "Search Players",
             class: "",
-            phx_debounce: 500
+            phx_debounce: 10,
+            label: false
           )
         ]
       end
