@@ -1,6 +1,4 @@
 defmodule TheRush.PlayerStatistics do
-  alias TheRushWeb.Router.Helpers, as: Routes
-  alias TheRushWeb.Endpoint
 
   @data "json/rushing.json"
         |> File.read!()
