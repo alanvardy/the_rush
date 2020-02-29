@@ -19,6 +19,8 @@ defmodule TheRushWeb.PageView do
 
   @doc "Color the cell if it is in a sorted column, takes the current column and the sort variable"
   @spec cell_class(String.t(), any) :: String.t()
+  def cell_class("Player", {"Player", _}), do: "first-column table-active"
+  def cell_class("Player", {_, _}), do: "first-column"
   def cell_class(column, {column, _}), do: "table-active"
   def cell_class(_, _), do: ""
 end

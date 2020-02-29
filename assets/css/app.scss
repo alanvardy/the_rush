@@ -1,6 +1,16 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "../../deps/ex_effective_bootstrap/priv/static/ex_effective_bootstrap";
 
+td {
+  width: 30px;
+  font-size: .8rem;
+}
+
+.first-column {
+  width: 200px;
+  font-size: 1rem;
+}
+
 h1 { margin-top: 3rem; }
 
 h2 { margin-top: 3.4rem; }
@@ -13,7 +23,7 @@ th.rotate {
 
   & > div {
     transform:
-    translate(18px, 19px)
+    translate(18px, 10px)
     rotate(315deg);
     width: 30px;
 
