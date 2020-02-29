@@ -13,18 +13,18 @@ defmodule TheRush.PlayerStatistics do
     {"Player", "Name"},
     {"Team", "Team"},
     {"Pos", "Position"},
-    {"Att/G", "Average Attempts / Game"},
-    {"Att", "Attempts"},
+    {"Att/G", ["Rushing Attempts / Game Avg"]},
+    {"Att", "Rushing Attempts"},
     {"Yds", "Total Rushing Yards"},
     {"Avg", "Average Yards Per Attempt"},
-    {"Yds/G", "Yards Per Game"},
-    {"TD", "Total Touchdowns"},
-    {"Lng", "Longest (T = Touchdown)"},
-    {"1st", "First Downs"},
-    {"1st%", "First Down Percentage"},
-    {"20+", "20+ Yards Each"},
-    {"40+", "40+ Yards Each"},
-    {"FUM", "Fumbles"}
+    {"Yds/G", "Rushing Yards Per Game"},
+    {"TD", "Total Rushing Touchdowns"},
+    {"Lng", "Longest Rush (T = Touchdown)"},
+    {"1st", "Rushing First Downs"},
+    {"1st%", "Rushing First Down %"},
+    {"20+", "Rushing 20+ Yards Each"},
+    {"40+", "Rushing 40+ Yards Each"},
+    {"FUM", "Rushing Fumbles"}
   ]
 
   @spec get_fields :: [{String.t(), String.t()}]
