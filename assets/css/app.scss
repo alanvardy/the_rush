@@ -4,3 +4,20 @@
 h1 {
   margin-top: 3rem;
 }
+
+th.rotate {
+  height: 200px;
+  white-space: nowrap;
+
+}
+
+th.rotate > div {
+  transform:
+    translate(25px, 28px)
+    rotate(315deg);
+  width: 50px;
+}
+th.rotate > div > span {
+  border-bottom: 1px solid #ccc;
+  padding: 5px 10px;
+}

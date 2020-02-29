@@ -1,26 +1,32 @@
-<table class="table">
-  <thead>
-    <tr>
-      <%= for {column, label} <- @fields do %>
-        <th scope="col">
-          <%= label %>
-          <a
-            style="cursor: pointer"
-            phx-click="sort"
-            phx-value-column="<%= column %>">
-            <%= build_sort(column, @sort) %>
-          </a>
-        </th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <%= for statistic <- @statistics do %>
+<div class="div">
+  <table class="table">
+    <thead>
       <tr>
-      <%= for {column, _label} <- @fields do %>
-        <td><%= Map.get(statistic, column, "") %></td>
-      <% end %>
+        <%= for {column, label} <- @fields do %>
+          <th scope="col" class="rotate">
+            <div>
+              <span>
+              <%= label %>
+            <a
+              style="cursor: pointer"
+              phx-click="sort"
+              phx-value-column="<%= column %>">
+              <%= build_sort(column, @sort) %>
+            </a>
+              </span>
+            </div><br>
+          </th>
+        <% end %>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <%= for statistic <- @statistics do %>
+        <tr>
+        <%= for {column, _label} <- @fields do %>
+          <td><%= Map.get(statistic, column, "") %></td>
+        <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
