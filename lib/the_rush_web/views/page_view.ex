@@ -3,6 +3,8 @@ defmodule TheRushWeb.PageView do
 
   alias ExEffectiveBootstrap.Icons
 
+  @doc "Make a sort button and show a chevron if column is sorted"
+  @spec build_sort(any, any) :: {:safe, iolist} | String.t()
   def build_sort(col, {col, :desc}) do
     content_tag(:span, ["sort", Icons.icon("chevron-down")], [])
   end
@@ -12,6 +14,6 @@ defmodule TheRushWeb.PageView do
   end
 
   def build_sort(_, _) do
-    "sort"
+    "sort  "
   end
 end

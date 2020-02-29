@@ -19,11 +19,13 @@ defmodule TheRushWeb.Live.PlayerStatisticsTable do
   @spec render(map) :: Phoenix.LiveView.Rendered.t()
   def render(assigns), do: TheRushWeb.PageView.render("_table.html", assigns)
 
-  @doc "Sort a column when user clicks sort"
-  def handle_event("sort", %{"column" => column}, %{assigns: %{sort: {col, dir}}} = socket) do
+  @doc "Sort a column when user clicks sort, reverses direction of sort if column already sorted"
+  def handle_event("sort", %{"column" => column}, socket) do
+    %{assigns: %{sort: {sorted_column, direction}}} = socket
+
     sort =
-      if col == column do
-        {column, reverse(dir)}
+      if sorted_column == column do
+        {column, reverse(direction)}
       else
         {column, :desc}
       end
