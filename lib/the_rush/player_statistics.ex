@@ -1,4 +1,7 @@
 defmodule TheRush.PlayerStatistics do
+  @moduledoc "Handles getting and sorting NFL player statistical data"
+
+  alias TheRush.PlayerStatistics.Sort
 
   @type player_data :: [map]
   @data "json/rushing.json"
@@ -32,14 +35,15 @@ defmodule TheRush.PlayerStatistics do
   @spec get_data :: player_data
   @spec get_data(keyword) :: player_data
   def get_data(opts \\ []) do
-    sort = Keyword.get(opts, :sort)
-
     @data
-    |> maybe_sort(sort)
+    |> build_map(opts)
+    |> Sort.run()
   end
 
-  @spec maybe_sort(player_data, any) :: player_data
-  defp maybe_sort(data, {col, :desc}), do: Enum.sort(data, &(&1[col] <= &2[col]))
-  defp maybe_sort(data, {col, :asc}), do: Enum.sort(data, &(&1[col] >= &2[col]))
-  defp maybe_sort(data, _), do: data
+  defp build_map(data, opts) do
+    %{
+      data: data,
+      sort: Keyword.get(opts, :sort)
+    }
+  end
 end
