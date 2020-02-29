@@ -21,7 +21,6 @@ defmodule TheRushWeb.Live.PlayerStatisticsTable do
 
   @doc "Sort a column when user clicks sort"
   def handle_event("sort", %{"column" => column}, %{assigns: %{sort: {col, dir}}} = socket) do
-    IO.inspect(column, label: "COLUMN")
     sort =
       if col == column do
         {column, reverse(dir)}
