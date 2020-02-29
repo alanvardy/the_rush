@@ -40,6 +40,7 @@ defmodule TheRushWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
+      use ExEffectiveBootstrap.View
       import TheRushWeb.ErrorHelpers
       import TheRushWeb.Gettext
       import Phoenix.LiveView.Helpers

@@ -1,0 +1,11 @@
+<nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
+  <%= link "THE RUSH", to: Routes.page_path(@conn, :index), class: "navbar-brand"%>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav mr-auto">
+      <%= nav_link(@conn, "361", to: Routes.page_path(@conn, :index)) %>
+    </div>
+  </div>
+</nav>

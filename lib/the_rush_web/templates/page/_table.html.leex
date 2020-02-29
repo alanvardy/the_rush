@@ -1,10 +1,10 @@
-<div class="div">
+<div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
         <% [{column, label} | remaining_fields] = @fields %>
           <th scope="col">
-              <%= search_box %><br>
+              <%= render "_search.html", count: @count %><br>
               <%= label %>
             <a
               style="cursor: pointer"

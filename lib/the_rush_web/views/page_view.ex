@@ -21,28 +21,4 @@ defmodule TheRushWeb.PageView do
   @spec cell_class(String.t(), any) :: String.t()
   def cell_class(column, {column, _}), do: "table-active"
   def cell_class(_, _), do: ""
-
-  @spec search_box :: {:safe, iolist}
-  def search_box do
-    form_for(
-      :search,
-      "#",
-      [
-        phx_change: :search,
-        class: "",
-        # onkeypress to disable enter key in search field
-        onkeypress: "return event.keyCode != 13;"
-      ],
-      fn f ->
-        [
-          Inputs.input(f, :search,
-            placeholder: "Search Players",
-            class: "",
-            phx_debounce: 10,
-            label: false
-          )
-        ]
-      end
-    )
-  end
 end

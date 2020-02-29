@@ -9,12 +9,15 @@ defmodule TheRushWeb.Live.PlayerStatisticsTable do
   def mount(:not_mounted_at_router, _, socket) do
     search = ""
     sort = {"Player", :desc}
+    statistics = PlayerStatistics.get_data(%{search: search, sort: sort})
+    count = Enum.count(statistics)
 
     assigns = [
-      statistics: PlayerStatistics.get_data(%{search: search, sort: sort}),
+      statistics: statistics,
       fields: PlayerStatistics.get_fields(),
       sort: sort,
-      search: search
+      search: search,
+      count: count
     ]
 
     {:ok, assign(socket, assigns)}
@@ -47,10 +50,13 @@ defmodule TheRushWeb.Live.PlayerStatisticsTable do
     %{assigns: %{sort: sort}} = socket
 
     search = PlayerStatistics.sanitize_search(search)
+    statistics = PlayerStatistics.get_data(%{sort: sort, search: search})
+    count = Enum.count(statistics)
 
     assigns = [
-      statistics: PlayerStatistics.get_data(%{sort: sort, search: search}),
-      search: search
+      statistics: statistics,
+      search: search,
+      count: count
     ]
 
     {:noreply, assign(socket, assigns)}
