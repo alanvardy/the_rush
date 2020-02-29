@@ -20,7 +20,9 @@ defmodule TheRushWeb.PageViewTest do
     end
 
     test "builds a sort link without chevrons when different column" do
-      sort_link = PageView.build_sort("column_name", {"different_column", :desc})
+      sort_link =
+        PageView.build_sort("column_name", {"different_column", :desc})
+        |> Phoenix.HTML.safe_to_string()
 
       refute sort_link =~ "eb-icon-chevron-up"
       refute sort_link =~ "eb-icon-chevron-down"
