@@ -4,6 +4,7 @@
       <tr>
         <% [{column, label} | remaining_fields] = @fields %>
           <th scope="col">
+              <%= search_box %><br>
               <%= label %>
             <a
               style="cursor: pointer"
