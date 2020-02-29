@@ -23,6 +23,7 @@ defmodule TheRushWeb do
 
       import Plug.Conn
       import TheRushWeb.Gettext
+      import Phoenix.LiveView.Controller
       alias TheRushWeb.Router.Helpers, as: Routes
     end
   end
@@ -41,6 +42,7 @@ defmodule TheRushWeb do
 
       import TheRushWeb.ErrorHelpers
       import TheRushWeb.Gettext
+      import Phoenix.LiveView.Helpers
       alias TheRushWeb.Router.Helpers, as: Routes
     end
   end
@@ -50,6 +52,7 @@ defmodule TheRushWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 

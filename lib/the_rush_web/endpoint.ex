@@ -1,6 +1,8 @@
 defmodule TheRushWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :the_rush
 
+  @session_options [store: :cookie, key: "_the_rush_key", signing_salt: "inxRXQx1"]
+
   socket "/socket", TheRushWeb.UserSocket,
     websocket: true,
     longpoll: false
@@ -23,6 +25,8 @@ defmodule TheRushWeb.Endpoint do
     plug Phoenix.CodeReloader
   end
 
+  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
@@ -38,9 +42,7 @@ defmodule TheRushWeb.Endpoint do
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   plug Plug.Session,
-    store: :cookie,
-    key: "_the_rush_key",
-    signing_salt: "inxRXQx1"
+       @session_options
 
   plug TheRushWeb.Router
 end

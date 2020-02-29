@@ -19,6 +19,11 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :the_rush, TheRushWeb.Endpoint,
+  live_view: [
+    signing_salt: "SECRET_SALT"
+  ]
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

@@ -16,6 +16,20 @@ config :the_rush, TheRushWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+secret_key_base =
+  System.get_env("SECRET_KEY_BASE") ||
+    raise """
+    environment variable SECRET_KEY_BASE is missing.
+    You can generate one by calling: mix phx.gen.secret
+    """
+
+config :the_rush, TheRushWeb.Endpoint,
+  http: [:inet6, port: String.to_integer(System.get_env("PORT") || "4000")],
+  secret_key_base: secret_key_base,
+  live_view: [
+    signing_salt: secret_key_base
+  ]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
