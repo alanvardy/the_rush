@@ -1,15 +1,23 @@
 <table class="table">
   <thead>
     <tr>
-      <%= for label <- @field_labels do %>
-        <th scope="col"><%= label %></th>
+      <%= for {column, label} <- @fields do %>
+        <th scope="col">
+          <%= label %>
+          <a
+            style="cursor: pointer"
+            phx-click="sort"
+            phx-value-column="<%= column %>">
+            <%= build_sort(column, @sort) %>
+          </a>
+        </th>
       <% end %>
     </tr>
   </thead>
   <tbody>
     <%= for statistic <- @statistics do %>
       <tr>
-      <%= for column <- @field_columns do %>
+      <%= for {column, _label} <- @fields do %>
         <td><%= Map.get(statistic, column, "") %></td>
       <% end %>
       </tr>

@@ -1,5 +1,6 @@
 defmodule TheRush.PlayerStatistics do
 
+  @type player_data :: [map]
   @data "json/rushing.json"
         |> File.read!()
         |> Jason.decode!()
@@ -23,23 +24,22 @@ defmodule TheRush.PlayerStatistics do
     {"FUM", "Fumbles"}
   ]
 
-  @spec get_data :: [map]
-  def get_data do
-    @data
-  end
-
   @spec get_fields :: [{String.t(), String.t()}]
   def get_fields do
     @fields
   end
 
-  @spec get_field_columns :: [String.t()]
-  def get_field_columns do
-    Enum.map(@fields, fn field -> elem(field, 0) end)
+  @spec get_data :: player_data
+  @spec get_data(keyword) :: player_data
+  def get_data(opts \\ []) do
+    sort = Keyword.get(opts, :sort)
+
+    @data
+    |> maybe_sort(sort)
   end
 
-  @spec get_field_labels :: [String.t()]
-  def get_field_labels do
-    Enum.map(@fields, fn field -> elem(field, 1) end)
-  end
+  @spec maybe_sort(player_data, any) :: player_data
+  defp maybe_sort(data, {col, :desc}), do: Enum.sort(data, &(&1[col] <= &2[col]))
+  defp maybe_sort(data, {col, :asc}), do: Enum.sort(data, &(&1[col] >= &2[col]))
+  defp maybe_sort(data, _), do: data
 end
