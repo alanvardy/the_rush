@@ -1,23 +1,27 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "../../deps/ex_effective_bootstrap/priv/static/ex_effective_bootstrap";
 
-h1 {
-  margin-top: 3rem;
-}
+h1 { margin-top: 3rem; }
+
+h2 { margin-top: 3.4rem; }
+
+th { font-size: 0.8rem !important; }
 
 th.rotate {
   height: 200px;
   white-space: nowrap;
 
+  & > div {
+    transform:
+    translate(18px, 19px)
+    rotate(315deg);
+    width: 30px;
+
+    & > span {
+      border-bottom: 1px solid #ccc;
+      padding: 5px 10px;
+    }
+  }
 }
 
-th.rotate > div {
-  transform:
-    translate(25px, 28px)
-    rotate(315deg);
-  width: 50px;
-}
-th.rotate > div > span {
-  border-bottom: 1px solid #ccc;
-  padding: 5px 10px;
-}
+.eb-icon{ height: 1rem; }
