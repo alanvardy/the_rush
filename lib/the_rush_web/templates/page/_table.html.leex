@@ -2,7 +2,17 @@
   <table class="table">
     <thead>
       <tr>
-        <%= for {column, label} <- @fields do %>
+        <% [{column, label} | remaining_fields] = @fields %>
+          <th scope="col">
+              <%= label %>
+            <a
+              style="cursor: pointer"
+              phx-click="sort"
+              phx-value-column="<%= column %>">
+              <%= build_sort(column, @sort) %>
+            </a>
+          </th>
+        <%= for {column, label} <- remaining_fields do %>
           <th scope="col" class="rotate">
             <div>
               <span>
@@ -23,7 +33,7 @@
       <%= for statistic <- @statistics do %>
         <tr>
         <%= for {column, _label} <- @fields do %>
-          <td><%= Map.get(statistic, column, "") %></td>
+          <td class="<%= cell_class(column, @sort) %>"><%= Map.get(statistic, column, "") %></td>
         <% end %>
         </tr>
       <% end %>
