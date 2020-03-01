@@ -2,6 +2,9 @@ defmodule TheRushWeb.PageView do
   use TheRushWeb, :view
 
   alias ExEffectiveBootstrap.Icons
+  alias TheRush.PlayerStatistics.Paginate
+
+  defdelegate pagination(query), to: Paginate, as: :build
 
   @doc "Make a sort button and show a chevron if column is sorted, takes the current column and the sort variable"
   @spec build_sort(any, any) :: {:safe, iolist}
