@@ -50,6 +50,7 @@ defmodule TheRush.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
+      {:csv, "~> 2.3"},
       # Tooling
       {:ex_check, ">= 0.0.0", only: :dev, runtime: false},
       {:credo, "~> 1.2.1", only: [:dev, :test], runtime: false},

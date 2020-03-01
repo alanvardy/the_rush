@@ -14,6 +14,7 @@ defmodule TheRushWeb.Router do
 
     get "/", PageController, :default
     get "/ten_thousand", PageController, :ten_thousand
+    resources "/csv_export", CsvExportController, only: [:create]
   end
 
   # Other scopes may use custom stacks.

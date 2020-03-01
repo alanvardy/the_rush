@@ -1,5 +1,5 @@
 <div class="table-responsive-lg mt-4 mb-2">
-<%= pagination(@query) %>
+  <%= render "_table_bar.html", query: @query, socket: @socket %>
   <table class="table table-sm table-hover">
     <thead>
       <tr>
@@ -42,4 +42,4 @@
     </tbody>
   </table>
 </div>
-<%= pagination(@query) %>
+<%= render "_table_bar.html", query: @query, socket: @socket %>

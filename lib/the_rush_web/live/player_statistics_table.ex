@@ -50,4 +50,8 @@ defmodule TheRushWeb.Live.PlayerStatisticsTable do
 
     {:noreply, assign(socket, query: query)}
   end
+
+  def handle_call(:get_query, _from, %{assigns: %{query: query}} = state) do
+    {:reply, query, state}
+  end
 end
