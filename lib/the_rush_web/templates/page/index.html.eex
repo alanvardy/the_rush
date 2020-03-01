@@ -7,4 +7,4 @@
   </div>
 </div>
 
-<%= live_render(@conn, TheRushWeb.Live.PlayerStatisticsTable) %>
+<%= live_render(@conn, TheRushWeb.Live.PlayerStatisticsTable, session: %{"record_quantity" => @record_quantity}) %>

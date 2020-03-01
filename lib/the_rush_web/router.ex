@@ -12,7 +12,8 @@ defmodule TheRushWeb.Router do
   scope "/", TheRushWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", PageController, :default
+    get "/ten_thousand", PageController, :ten_thousand
   end
 
   # Other scopes may use custom stacks.

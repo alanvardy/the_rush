@@ -3,11 +3,13 @@ defmodule TheRush.PlayerStatistics do
 
   alias TheRush.PlayerStatistics.{Search, Sort}
 
-  @data "json/rushing.json"
-        |> File.read!()
-        |> Jason.decode!()
-        |> Search.build_search_fields()
-        |> Sort.presort()
+  @default "json/rushing.json"
+           |> File.read!()
+           |> Jason.decode!()
+           |> Search.build_search_fields()
+           |> Sort.presort()
+
+  @ten_thousand Enum.reduce(1..31, [], fn _, acc -> @default ++ acc end)
 
   @fields [
     {"Player", "Name"},
@@ -32,9 +34,15 @@ defmodule TheRush.PlayerStatistics do
     @fields
   end
 
-  @spec get_data(%{search: String.t(), sort: {String.t(), :asc | :desc}}) :: [map]
-  def get_data(%{search: search, sort: sort}) do
-    %{data: @data, search: search, sort: sort}
+  @spec get_data(map) :: [map]
+  def get_data(%{search: search, sort: sort, quantity: quantity}) do
+    data =
+      case quantity do
+        :default -> @default
+        :ten_thousand -> @ten_thousand
+      end
+
+    %{data: data, search: search, sort: sort}
     |> Search.run()
     |> Sort.run()
     |> Map.get(:data)
