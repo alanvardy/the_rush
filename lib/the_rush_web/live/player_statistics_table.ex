@@ -28,14 +28,24 @@ defmodule TheRushWeb.Live.PlayerStatisticsTable do
   end
 
   @doc "Search players when typing into search field while maintaining sort"
-  def handle_event(
-        "search",
-        %{"search" => %{"search" => search}},
-        %{assigns: %{query: query}} = socket
-      ) do
+  def handle_event("search", %{"search" => %{"search" => search}}, socket) do
+    %{assigns: %{query: query}} = socket
+
     query =
       query
       |> PlayerStatistics.change_search(search)
+      |> PlayerStatistics.get()
+
+    {:noreply, assign(socket, query: query)}
+  end
+
+  @doc "Change the currently viewed page when a pagination link is clicked"
+  def handle_event("change_page", %{"page" => page}, socket) do
+    %{assigns: %{query: query}} = socket
+
+    query =
+      query
+      |> PlayerStatistics.change_page(page)
       |> PlayerStatistics.get()
 
     {:noreply, assign(socket, query: query)}

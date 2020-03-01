@@ -14,4 +14,5 @@ defmodule TheRush.PlayerStatistics do
   defdelegate new_query(quantity), to: Request, as: :new
   defdelegate change_search(query, column), to: Search, as: :change
   defdelegate change_sort(query, column), to: Sort, as: :change
+  defdelegate change_page(query, column), to: Paginate, as: :change
 end
