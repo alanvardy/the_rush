@@ -2,7 +2,7 @@
   <div class="input-group">
     <%= input f, :search, placeholder: "Search Players", class: "form-control", phx_debounce: 250, label: false, value: @query.search %>
     <div class="input-group-append mb-3">
-      <div class="input-group-text"><%= @query.count %></div>
+      <div class="input-group-text bg-light-brown"><%= @query.count %></div>
     </div>
   </div>
 <% end %>

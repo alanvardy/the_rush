@@ -14,7 +14,7 @@ defmodule TheRush.PlayerStatistics.Request do
     {"Player", "Name"},
     {"Team", "Team"},
     {"Pos", "Position"},
-    {"Att/G", ["Rushing Attempts / Game Avg"]},
+    {"Att/G", "Rushing Attempts / Game Avg"},
     {"Att", "Rushing Attempts"},
     {"Yds", "Total Rushing Yards"},
     {"Avg", "Average Yards Per Attempt"},

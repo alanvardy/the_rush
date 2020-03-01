@@ -28,7 +28,6 @@ defmodule TheRush.PlayerStatistics.Paginate do
        numbered_buttons(page, pages) ++
        [paginate_button("Next", page, pages)])
     |> contag(:ul, class: "pagination pagination-sm")
-    |> contag(:nav, class: "mt-1 mt-xl-0")
   end
 
   # Handle the case where there is only a single page, just gives us some disabled buttons
@@ -75,7 +74,7 @@ defmodule TheRush.PlayerStatistics.Paginate do
       "phx-click": "change_page",
       "phx-value-page": page + 1
     )
-    |> contag(:li, class: "exz-pagination-li")
+    |> contag(:li, [])
   end
 
   defp paginate_button("Previous", page, _pages) do
@@ -85,7 +84,7 @@ defmodule TheRush.PlayerStatistics.Paginate do
       "phx-click": "change_page",
       "phx-value-page": page - 1
     )
-    |> contag(:li, class: "exz-pagination-li")
+    |> contag(:li, [])
   end
 
   defp paginate_button(same, same, _pages) do
