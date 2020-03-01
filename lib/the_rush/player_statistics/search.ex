@@ -17,19 +17,32 @@ defmodule TheRush.PlayerStatistics.Search do
     }
   end
 
-  @doc "Execute the search if previously triggered, also get the record count"
+  @doc """
+  Execute the search if previously triggered, also need to reset
+    - record count
+    - page count
+    - reset to first page
+  """
   @spec execute(Query.t()) :: Query.t()
-  # Empty search string means that the original data can just be passed through
-  def execute(%Query{search: "", data: data} = query) do
-    %Query{query | searched_data: data, count: Enum.count(data)}
-  end
-
   # When searched_data is nil, execute the search
-  def execute(%Query{data: data, search: search, searched_data: nil} = query) do
+  def execute(%Query{data: data, search: search, searched_data: nil, per_page: per_page} = query) do
     searched_data =
-      Enum.filter(data, fn row -> String.contains?(row["player_search"], search) end)
+      if search == "" do
+        data
+      else
+        Enum.filter(data, fn row -> String.contains?(row["player_search"], search) end)
+      end
 
-    %Query{query | searched_data: searched_data, count: Enum.count(searched_data)}
+    count = Enum.count(searched_data)
+
+    pages =
+      if rem(count, per_page) > 0 do
+        div(count, per_page) + 1
+      else
+        div(count, per_page)
+      end
+
+    %Query{query | searched_data: searched_data, count: count, pages: pages, page: 1}
   end
 
   # No search required
