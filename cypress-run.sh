@@ -1,5 +1,7 @@
 # cypress-run.sh
 
+# Just in case compiling takes a while on a fresh start
+MIX_ENV=systemtest mix compile
 echo "===STARTING PHX SERVER==="
 echo "===IF STARTING CYPRESS FAILS==="
 echo "===RUN npm install cypress --save-dev ==="
