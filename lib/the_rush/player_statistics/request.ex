@@ -39,13 +39,12 @@ defmodule TheRush.PlayerStatistics.Request do
 
     %Query{
       data: data,
-      searched_data: data,
-      sorted_data: data,
+      searched_data: nil,
+      sorted_data: nil,
       paginated_data: nil,
       search: "",
       per_page: 50,
       sort: {"Player", :desc},
-      pages: nil,
       page: 1,
       fields: @fields
     }

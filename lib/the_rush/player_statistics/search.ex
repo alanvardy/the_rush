@@ -11,7 +11,6 @@ defmodule TheRush.PlayerStatistics.Search do
         searched_data: nil,
         sorted_data: nil,
         paginated_data: nil,
-        pages: nil,
         page: 1,
         count: nil
     }
@@ -25,7 +24,7 @@ defmodule TheRush.PlayerStatistics.Search do
   """
   @spec execute(Query.t()) :: Query.t()
   # When searched_data is nil, execute the search
-  def execute(%Query{data: data, search: search, searched_data: nil, per_page: per_page} = query) do
+  def execute(%Query{data: data, search: search, searched_data: nil} = query) do
     searched_data =
       if search == "" do
         data
@@ -35,14 +34,7 @@ defmodule TheRush.PlayerStatistics.Search do
 
     count = Enum.count(searched_data)
 
-    pages =
-      if rem(count, per_page) > 0 do
-        div(count, per_page) + 1
-      else
-        div(count, per_page)
-      end
-
-    %Query{query | searched_data: searched_data, count: count, pages: pages, page: 1}
+    %Query{query | searched_data: searched_data, count: count, page: 1}
   end
 
   # No search required

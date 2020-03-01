@@ -20,8 +20,6 @@ defmodule TheRush.PlayerStatistics.Query do
     :sort,
     # Which page is currently being viewed
     :page,
-    # Total number of pages
-    :pages,
     # How many records shown per page
     :per_page,
     # List of field keys and labels, i.e. {"Pos", "Position"}
@@ -37,7 +35,6 @@ defmodule TheRush.PlayerStatistics.Query do
           search: String.t(),
           sort: {String.t(), :asc | :desc},
           page: non_neg_integer,
-          pages: non_neg_integer | nil,
           per_page: non_neg_integer,
           fields: [{String.t(), String.t()}]
         }
