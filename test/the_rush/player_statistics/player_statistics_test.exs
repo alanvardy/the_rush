@@ -2,89 +2,84 @@ defmodule TheRush.PlayerStatistics.SortTest do
   @moduledoc false
   use TheRushWeb.ConnCase, async: true
 
-  alias TheRush.PlayerStatistics.Sort
+  alias TheRush.PlayerStatistics.{Request, Sort}
 
-  @struct %{
-    data: [
-      %{"field1" => 123, "field2" => "def", "field3" => :banana},
-      %{"field1" => 456, "field2" => "hij", "field3" => :apple},
-      %{"field1" => 789, "field2" => "abc", "field3" => :carrot}
-    ],
-    sort: {"field1", :desc},
-    search: ""
-  }
+  @data [
+    %{"field1" => 123, "field2" => "def", "field3" => :banana},
+    %{"field1" => 456, "field2" => "hij", "field3" => :apple},
+    %{"field1" => 789, "field2" => "abc", "field3" => :carrot}
+  ]
+  @query Request.new(:default)
+         |> Map.put(:data, @data)
+         |> Map.put(:searched_data, @data)
 
   describe "run/1" do
-    test "just returns the data when no sort is defined" do
-      assert Sort.run(@struct) == @struct
-    end
-
     test "can sort descending" do
-      sort = {"field2", :desc}
-      input = %{@struct | sort: sort}
+      expected_data = [
+        %{"field1" => 789, "field2" => "abc", "field3" => :carrot},
+        %{"field1" => 123, "field2" => "def", "field3" => :banana},
+        %{"field1" => 456, "field2" => "hij", "field3" => :apple}
+      ]
 
-      output = %{
-        sort: sort,
-        search: "",
-        data: [
-          %{"field1" => 789, "field2" => "abc", "field3" => :carrot},
-          %{"field1" => 123, "field2" => "def", "field3" => :banana},
-          %{"field1" => 456, "field2" => "hij", "field3" => :apple}
-        ]
-      }
+      result =
+        @query
+        |> Sort.change("field2")
+        |> Sort.execute()
+        |> Map.get(:sorted_data)
 
-      assert Sort.run(input) == output
+      assert result == expected_data
     end
 
     test "can sort descending again" do
-      sort = {"field3", :desc}
-      input = %{@struct | sort: sort}
+      expected_data = [
+        %{"field1" => 456, "field2" => "hij", "field3" => :apple},
+        %{"field1" => 123, "field2" => "def", "field3" => :banana},
+        %{"field1" => 789, "field2" => "abc", "field3" => :carrot}
+      ]
 
-      output = %{
-        sort: sort,
-        search: "",
-        data: [
-          %{"field1" => 456, "field2" => "hij", "field3" => :apple},
-          %{"field1" => 123, "field2" => "def", "field3" => :banana},
-          %{"field1" => 789, "field2" => "abc", "field3" => :carrot}
-        ]
-      }
+      result =
+        @query
+        |> Sort.change("field3")
+        |> Sort.execute()
+        |> Map.get(:sorted_data)
 
-      assert Sort.run(input) == output
+      assert result == expected_data
     end
 
     test "can sort ascending" do
-      sort = {"field1", :asc}
-      input = %{@struct | sort: sort}
+      expected_data = [
+        %{"field1" => 789, "field2" => "abc", "field3" => :carrot},
+        %{"field1" => 456, "field2" => "hij", "field3" => :apple},
+        %{"field1" => 123, "field2" => "def", "field3" => :banana}
+      ]
 
-      output = %{
-        sort: sort,
-        search: "",
-        data: [
-          %{"field1" => 789, "field2" => "abc", "field3" => :carrot},
-          %{"field1" => 456, "field2" => "hij", "field3" => :apple},
-          %{"field1" => 123, "field2" => "def", "field3" => :banana}
-        ]
-      }
+      result =
+        @query
+        |> Sort.change("field1")
+        |> Sort.execute()
+        |> Sort.change("field1")
+        |> Sort.execute()
+        |> Map.get(:sorted_data)
 
-      assert Sort.run(input) == output
+      assert result == expected_data
     end
 
     test "can sort ascending again" do
-      sort = {"field2", :asc}
-      input = %{@struct | sort: sort}
+      expected_data = [
+        %{"field1" => 456, "field2" => "hij", "field3" => :apple},
+        %{"field1" => 123, "field2" => "def", "field3" => :banana},
+        %{"field1" => 789, "field2" => "abc", "field3" => :carrot}
+      ]
 
-      output = %{
-        sort: sort,
-        search: "",
-        data: [
-          %{"field1" => 456, "field2" => "hij", "field3" => :apple},
-          %{"field1" => 123, "field2" => "def", "field3" => :banana},
-          %{"field1" => 789, "field2" => "abc", "field3" => :carrot}
-        ]
-      }
+      result =
+        @query
+        |> Sort.change("field2")
+        |> Sort.execute()
+        |> Sort.change("field2")
+        |> Sort.execute()
+        |> Map.get(:sorted_data)
 
-      assert Sort.run(input) == output
+      assert result == expected_data
     end
   end
 end

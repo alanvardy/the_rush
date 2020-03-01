@@ -2,67 +2,42 @@ defmodule TheRushWeb.Live.PlayerStatisticsTable do
   use Phoenix.LiveView
   @moduledoc "LiveView for adding equipment consumables to equipment"
 
-  alias Phoenix.LiveView.Socket
+  alias Phoenix.LiveView.{Rendered, Socket}
   alias TheRush.PlayerStatistics
 
   @spec mount(:not_mounted_at_router, any, Socket.t()) :: {:ok, Socket.t()}
   def mount(:not_mounted_at_router, %{"record_quantity" => quantity}, socket) do
-    search = ""
-    sort = {"Player", :desc}
-    statistics = PlayerStatistics.get_data(%{search: search, sort: sort, quantity: quantity})
-    count = Enum.count(statistics)
+    query =
+      PlayerStatistics.new_query(quantity)
+      |> PlayerStatistics.get()
 
-    assigns = [
-      statistics: statistics,
-      fields: PlayerStatistics.get_fields(),
-      sort: sort,
-      search: search,
-      count: count,
-      quantity: quantity
-    ]
-
-    {:ok, assign(socket, assigns)}
+    {:ok, assign(socket, query: query)}
   end
 
-  @spec render(map) :: Phoenix.LiveView.Rendered.t()
+  @spec render(map) :: Rendered.t()
   def render(assigns), do: TheRushWeb.PageView.render("_table.html", assigns)
 
   @doc "Sort a column when user clicks sort, reverses direction of sort if column already sorted"
-  def handle_event("sort", %{"column" => column}, socket) do
-    %{assigns: %{sort: {sorted_column, direction}, search: search, quantity: quantity}} = socket
+  def handle_event("sort", %{"column" => column}, %{assigns: %{query: query}} = socket) do
+    query =
+      query
+      |> PlayerStatistics.change_sort(column)
+      |> PlayerStatistics.get()
 
-    sort =
-      if sorted_column == column do
-        {column, reverse(direction)}
-      else
-        {column, :desc}
-      end
-
-    assigns = [
-      statistics: PlayerStatistics.get_data(%{sort: sort, search: search, quantity: quantity}),
-      sort: sort
-    ]
-
-    {:noreply, assign(socket, assigns)}
+    {:noreply, assign(socket, query: query)}
   end
 
   @doc "Search players when typing into search field while maintaining sort"
-  def handle_event("search", %{"search" => %{"search" => search}}, socket) do
-    %{assigns: %{sort: sort, quantity: quantity}} = socket
+  def handle_event(
+        "search",
+        %{"search" => %{"search" => search}},
+        %{assigns: %{query: query}} = socket
+      ) do
+    query =
+      query
+      |> PlayerStatistics.change_search(search)
+      |> PlayerStatistics.get()
 
-    search = PlayerStatistics.sanitize_search(search)
-    statistics = PlayerStatistics.get_data(%{sort: sort, search: search, quantity: quantity})
-    count = Enum.count(statistics)
-
-    assigns = [
-      statistics: statistics,
-      search: search,
-      count: count
-    ]
-
-    {:noreply, assign(socket, assigns)}
+    {:noreply, assign(socket, query: query)}
   end
-
-  defp reverse(:asc), do: :desc
-  defp reverse(:desc), do: :asc
 end

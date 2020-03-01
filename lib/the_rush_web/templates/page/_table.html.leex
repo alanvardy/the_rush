@@ -2,15 +2,15 @@
   <table class="table table-sm table-hover">
     <thead>
       <tr>
-        <% [{column, label} | remaining_fields] = @fields %>
+        <% [{column, label} | remaining_fields] = @query.fields %>
           <th scope="col">
-              <%= render "_search.html", count: @count %><br>
+              <%= render "_search.html", query: @query %><br>
               <%= label %>
             <a
               style="cursor: pointer"
               phx-click="sort"
               phx-value-column="<%= column %>">
-              <%= build_sort(column, @sort) %>
+              <%= build_sort(column, @query.sort) %>
             </a>
           </th>
         <%= for {column, label} <- remaining_fields do %>
@@ -22,7 +22,7 @@
               style="cursor: pointer"
               phx-click="sort"
               phx-value-column="<%= column %>">
-              <%= build_sort(column, @sort) %>
+              <%= build_sort(column, @query.sort) %>
             </a>
               </span>
             </div><br>
@@ -31,10 +31,10 @@
       </tr>
     </thead>
     <tbody>
-      <%= for statistic <- Enum.take(@statistics, 50) do %>
+      <%= for statistic <- @query.paginated_data do %>
         <tr>
-        <%= for {column, _label} <- @fields do %>
-          <td class="<%= cell_class(column, @sort) %>"><%= Map.get(statistic, column, "") %></td>
+        <%= for {column, _label} <- @query.fields do %>
+          <td class="<%= cell_class(column, @query.sort) %>"><%= Map.get(statistic, column, "") %></td>
         <% end %>
         </tr>
       <% end %>
