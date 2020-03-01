@@ -5,7 +5,7 @@ defmodule TheRush.PlayerStatistics.Sort do
   @doc "For sorting data list on initial load"
   @spec presort([map]) :: [map]
   def presort(data) do
-    Enum.sort(data, &(&1["Player"] <= &2[Player]))
+    Enum.sort(data, &(&1["Player"] <= &2["Player"]))
   end
 
   @doc """
