@@ -4,7 +4,7 @@ defmodule TheRush.PlayerStatistics.Paginate do
   alias TheRush.PlayerStatistics.Query
   use Phoenix.HTML
 
-  @doc "Change the page, don't need to trigger pagination because pagination runs every time"
+  @doc "Change the page, don't need to explicitly trigger pagination because pagination runs every time"
   @spec change(Query.t(), String.t()) :: Query.t()
   def change(query, page) do
     %Query{query | page: String.to_integer(page)}
