@@ -3,12 +3,22 @@ defmodule TheRush.PlayerStatistics.Csv do
 
   alias TheRush.PlayerStatistics.Query
 
+  @doc """
+  Get the pid of the current process (a genserver) and serialize
+  so it can be passed through a controller action
+  """
   @spec get_serialized_pid :: binary
   def get_serialized_pid do
     self()
     |> :erlang.term_to_binary()
     |> Base.url_encode64()
   end
+
+  @doc """
+  Take a serialized pid, decode it and then use the resulting pid
+  to obtain the query struct from a genserver. Used to pass complex
+  datatypes between a liveview and a controller.
+  """
 
   @spec get_query(binary) :: Query.t()
   def get_query(serialized_pid) do
@@ -20,7 +30,7 @@ defmodule TheRush.PlayerStatistics.Csv do
     GenServer.call(pid, :get_query)
   end
 
-  @doc "Sends a CSV binary"
+  @doc "Sends a CSV binary through a controller"
   @spec export(Plug.Conn.t(), Query.t()) :: Plug.Conn.t()
   def export(conn, %Query{fields: fields, sorted_data: sorted_data}) do
     data =
@@ -42,13 +52,12 @@ defmodule TheRush.PlayerStatistics.Csv do
 
   @spec build_headers([{String.t(), String.t()}]) :: [String.t()]
   defp build_headers(fields) do
-    IO.inspect(fields)
-    Enum.map(fields, fn {_k, v} -> pretty_print(v) end)
+    Enum.map(fields, fn {_short, long} -> pretty_print(long) end)
   end
 
   @spec build_row([{String.t(), String.t()}], map) :: [String.t()]
   defp build_row(fields, row) do
-    Enum.map(fields, fn {k, _v} -> build_field(row, k) end)
+    Enum.map(fields, fn {short, _long} -> build_field(row, short) end)
   end
 
   @spec build_field(map, String.t()) :: String.t()
