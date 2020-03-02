@@ -33,4 +33,5 @@ npm-debug.log
 # this depending on your deployment strategy.
 /priv/static/
 .elixir_ls
-cypress/videos/table_test.js.mp4
+/cypress/videos/
+/cypress/screenshots/
