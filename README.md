@@ -1,19 +1,24 @@
-# TheRush
+# The Rush
 
-To start your Phoenix server:
+Search and sort your favourite NFL players
 
+## Installation and running this solution
+
+To run this project locally:
+
+  * Install Erlang > 22 and Elixir > 1.10 (if you use asdf you can just type `asdf install`)
   * Install dependencies with `mix deps.get`
-  * Install Node.js dependencies with `cd assets && npm install`
+  * Install Node.js dependencies with `npm install --prefix assets`
   * Start Phoenix endpoint with `mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Run the test suite
 
-## Learn more
+This project has a comprehensive test suite! To run the tests after installation simply execute
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+```
+mix check
+```
+
+In your terminal of choice.
