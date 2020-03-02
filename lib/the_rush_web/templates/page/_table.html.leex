@@ -8,6 +8,7 @@
               <%= render "_search.html", query: @query %><br>
               <%= label %>
             <a
+              class="sort-button"
               style="cursor: pointer"
               phx-click="sort"
               phx-value-column="<%= column %>">
