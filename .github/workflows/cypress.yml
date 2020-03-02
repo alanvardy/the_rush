@@ -25,7 +25,6 @@ jobs:
           key: ${{ runner.os }}-node_modules-cypress-${{ hashFiles('**/mix.lock') }}
           restore-keys: |
             ${{ runner.os }}-node_modules-cypress-
-      - run: cp config/dev.secret.exs.example config/dev.secret.exs
       - uses: actions/setup-elixir@v1.0.0
         with:
           otp-version: 22.1.8

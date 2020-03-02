@@ -1,3 +1,7 @@
+[![Build Status](https://github.com/alanvardy/the_rush/workflows/Unit%20Tests/badge.svg)](https://github.com/alanvardy/the_rush) 
+[![Build Status](https://github.com/alanvardy/the_rush/workflows/Dialyzer/badge.svg)](https://github.com/alanvardy/the_rush) 
+[![Build Status](https://github.com/alanvardy/the_rush/workflows/Cypress/badge.svg)](https://github.com/alanvardy/the_rush) 
+
 # The Rush
 
 Search and sort your favourite NFL players
