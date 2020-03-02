@@ -23,7 +23,6 @@ defmodule TheRush.PlayerStatistics.Search do
     - reset to first page
   """
   @spec execute(Query.t()) :: Query.t()
-  # When searched_data is nil, execute the search
   def execute(%Query{data: data, search: search, searched_data: nil} = query) do
     searched_data =
       if search == "" do
@@ -42,6 +41,12 @@ defmodule TheRush.PlayerStatistics.Search do
     query
   end
 
+  @doc "Puts a new sanitized player field in the data for search purposes"
+  @spec build_search_fields([map]) :: [map]
+  def build_search_fields(data) do
+    Enum.map(data, &Map.put(&1, "player_search", sanitize(&1["Player"])))
+  end
+
   @letters ~r/[a-zA-Z]/
 
   @doc "Takes a string and makes it only lowercase letters for search purposes"
@@ -51,11 +56,5 @@ defmodule TheRush.PlayerStatistics.Search do
     |> Regex.scan(string)
     |> Enum.join()
     |> String.downcase()
-  end
-
-  @doc "Puts a new sanitized field on the data for search purposes"
-  @spec build_search_fields([map]) :: [map]
-  def build_search_fields(data) do
-    Enum.map(data, &Map.put(&1, "player_search", sanitize(&1["Player"])))
   end
 end
