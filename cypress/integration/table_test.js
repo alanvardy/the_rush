@@ -10,12 +10,35 @@ describe('Table Test', function () {
     Cypress.Cookies.preserveOnce('_the_rush_key')
   })
 
-  it('Submits the contact form when not signed in', function () {
-    var content = 'Oh I wish I were an Oscar Meyer weiner'
-    var from_email = 'weiners@lots.com'
-    var name = 'Weiner Wannabe'
-
+  it('Gets the main page', function () {
     cy.visit('http://localhost:5000')
     cy.contains('The Rush')
+    cy.contains('Alex Smith')
+  })
+
+  it('Can reverse sort players', function () {
+    cy.visit('http://localhost:5000')
+    cy.contains('Alex Smith')
+    cy.get('a.sort-button').first().click()
+    cy.contains('Zach Zenner')
+  })
+
+  it('Can go to page 4', function () {
+    cy.visit('http://localhost:5000')
+    cy.get('.pagination').contains('4').click()
+    cy.contains('Jonathan Williams')
+  })
+
+  it('Can search for Mack Brown', function () {
+    cy.visit('http://localhost:5000')
+    cy.get('input[id="search_search"]').type('mackb')
+    cy.contains('Mack Brown')
+    cy.contains('WAS')
+    cy.contains('RB')
+  })
+
+  it('Gets 10k records', function () {
+    cy.visit('http://localhost:5000/ten_thousand')
+    cy.get('.pagination').contains('203')
   })
 })
