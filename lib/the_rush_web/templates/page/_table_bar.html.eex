@@ -4,7 +4,7 @@
     </div>
     <div class="col-md-6 text-right">
       <%= form_for :csv_export, Routes.csv_export_path(@socket, :create), [], fn f -> %>
-          <%= hidden_input f, :serialized_pid, value: TheRush.PlayerStatistics.Csv.get_serialized_pid() %>
+          <%= hidden_input f, :serialized_pid, value: TheRush.PlayerStatistics.find_serialized_pid() %>
           <%= submit "Export as CSV", class: "btn btn-sm btn-outline-primary" %>
       <% end %>
     </div>
