@@ -1,34 +1,8 @@
 defmodule TheRush.PlayerStatistics.Csv do
+  @moduledoc "For exporting CSV files"
   alias Phoenix.Controller
 
   alias TheRush.PlayerStatistics.Query
-
-  @doc """
-  Get the pid of the current process (a genserver) and serialize
-  so it can be passed through a controller action
-  """
-  @spec get_serialized_pid :: binary
-  def get_serialized_pid do
-    self()
-    |> :erlang.term_to_binary()
-    |> Base.url_encode64()
-  end
-
-  @doc """
-  Take a serialized pid, decode it and then use the resulting pid
-  to obtain the query struct from a genserver. Used to pass complex
-  datatypes between a liveview and a controller.
-  """
-
-  @spec get_query(binary) :: Query.t()
-  def get_query(serialized_pid) do
-    pid =
-      serialized_pid
-      |> Base.url_decode64!()
-      |> :erlang.binary_to_term()
-
-    GenServer.call(pid, :get_query)
-  end
 
   @doc "Sends a CSV binary through a controller"
   @spec export(Plug.Conn.t(), Query.t()) :: Plug.Conn.t()
@@ -68,6 +42,7 @@ defmodule TheRush.PlayerStatistics.Csv do
     |> filter()
   end
 
+  @spec pretty_print(nil | integer | float | String.t()) :: String.t()
   defp pretty_print(nil), do: ""
 
   defp pretty_print(integer) when is_integer(integer) do
@@ -79,5 +54,7 @@ defmodule TheRush.PlayerStatistics.Csv do
   end
 
   defp pretty_print(string) when is_binary(string), do: String.replace(string, ",", "")
+
+  @spec filter(String.t()) :: String.t()
   defp filter(text), do: String.replace(text, ",", "")
 end
