@@ -22,7 +22,7 @@ defmodule TheRush.PlayerStatistics.Query do
     :page,
     # How many records shown per page
     :per_page,
-    # List of field keys and labels, i.e. {"Pos", "Position"}
+    # List of field names short and long, i.e. {"Pos", "Position"}
     :fields
   ]
 
