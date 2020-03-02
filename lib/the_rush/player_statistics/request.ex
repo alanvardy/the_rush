@@ -2,14 +2,6 @@ defmodule TheRush.PlayerStatistics.Request do
   @moduledoc "For requesting data from a mythical API"
   alias TheRush.PlayerStatistics.{Query, Search, Sort}
 
-  @default "json/rushing.json"
-           |> File.read!()
-           |> Jason.decode!()
-           |> Search.build_search_fields()
-           |> Sort.presort()
-
-  @ten_thousand Enum.reduce(1..31, [], fn _, acc -> @default ++ acc end) |> Sort.presort()
-
   @fields [
     {"Player", "Name"},
     {"Team", "Team"},
@@ -28,6 +20,15 @@ defmodule TheRush.PlayerStatistics.Request do
     {"FUM", "Rushing Fumbles"}
   ]
 
+  @default "json/rushing.json"
+           |> File.read!()
+           |> Jason.decode!()
+           |> Search.build_search_fields()
+           |> Sort.build_sort_fields()
+           |> Sort.presort()
+
+  @ten_thousand Enum.reduce(1..31, [], fn _, acc -> @default ++ acc end) |> Sort.presort()
+
   @doc "Creates a new query struct with default values"
   @spec new(:default | :ten_thousand) :: Query.t()
   def new(quantity) do
@@ -44,7 +45,7 @@ defmodule TheRush.PlayerStatistics.Request do
       paginated_data: nil,
       search: "",
       per_page: 50,
-      sort: {"Player", :desc},
+      sort: {"Player", :asc},
       page: 1,
       fields: @fields
     }
