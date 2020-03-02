@@ -15,10 +15,10 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 ## Run the test suite
 
-This project has a comprehensive test suite! To run the tests after installation simply execute
+This project has a comprehensive test suite! To run the tests after installation simply execute:
 
 ```
 mix check
 ```
 
-In your terminal of choice.
+... in your terminal of choice.

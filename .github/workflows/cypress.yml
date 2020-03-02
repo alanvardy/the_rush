@@ -1,0 +1,37 @@
+name: Cypress
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v1.0.0
+      - uses: actions/cache@v1
+        with:
+          path: deps
+          key: ${{ runner.os }}-deps-cypress-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deps-cypress-
+      - uses: actions/cache@v1
+        with:
+          path: _build
+          key: ${{ runner.os }}-build-cypress-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-cypress-
+      - uses: actions/cache@v1
+        with:
+          path: assets/node_modules
+          key: ${{ runner.os }}-node_modules-cypress-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-cypress-
+      - run: cp config/dev.secret.exs.example config/dev.secret.exs
+      - uses: actions/setup-elixir@v1.0.0
+        with:
+          otp-version: 22.1.8
+          elixir-version: 1.10.1
+      - run: mix deps.get
+      - run: cd assets && npm install && npm install cypress --save-dev && cd ..
+      - run: npm run deploy --prefix ./assets
+      - run: mix phx.digest
+      - run: mix cypress.run
