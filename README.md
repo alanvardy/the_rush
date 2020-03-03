@@ -6,12 +6,16 @@
 
 Search and sort your favourite NFL players
 
+[https://the-rush.vardy.codes/](https://the-rush.vardy.codes/)
+
 ![Watch the video](the_rush.png)
 
 ## Installation and running this solution
 
 To run this project locally:
 
+  * Clone this repository to your local machine with `git clone git@github.com:alanvardy/the_rush.git`
+  * Navigate into the root directory with `cd the_rush`
   * Install Erlang > 22 and Elixir > 1.10 (if you use asdf you can just type `asdf install`)
   * Install dependencies with `mix deps.get`
   * Install Node.js dependencies with `npm install --prefix assets`
