@@ -6,6 +6,8 @@
 
 Search and sort your favourite NFL players
 
+[![Watch the video](the_rush.png)]
+
 ## Installation and running this solution
 
 To run this project locally:

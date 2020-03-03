@@ -42,6 +42,7 @@ defmodule TheRush.PlayerStatistics.Csv do
     |> filter()
   end
 
+  # Take a variety of inputs, all of which output strings
   @spec pretty_print(nil | integer | float | String.t()) :: String.t()
   defp pretty_print(nil), do: ""
 
